@@ -1,0 +1,250 @@
+/* Estilos específicos para as páginas de módulos */
+
+/* Cabeçalho do módulo */
+.modulo-header {
+    background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('../img/cyber-security.jpg') no-repeat center center/cover;
+    color: white;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.modulo-header h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.modulo-header p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Conteúdo do módulo */
+.modulo-content {
+    padding: 60px 0;
+}
+
+/* Navegação por abas */
+.tab-container {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+}
+
+.tabs {
+    display: flex;
+    background-color: var(--light-color);
+    border-bottom: 1px solid #ddd;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    padding: 15px 25px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    color: var(--text-color);
+}
+
+.tab-btn:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.tab-btn.active {
+    background-color: white;
+    color: var(--primary-color);
+}
+
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--primary-color);
+}
+
+.tab-content {
+    padding: 30px;
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Indicador de gravidade */
+.severity-meter {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.severity-meter.high {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+}
+
+.severity-meter.medium {
+    background-color: #fff8e1;
+    color: #ff8f00;
+    border: 1px solid #ffe082;
+}
+
+.severity-meter.low {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+}
+
+/* Estilo para lista de impactos */
+.impact-list {
+    margin: 20px 0;
+    padding-left: 20px;
+}
+
+.impact-list li {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+/* Exemplos de código */
+.code-example {
+    margin: 20px 0;
+    background-color: #f5f5f5;
+    border-radius: var(--border-radius);
+    padding: 15px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.code-example h4, .code-example h6 {
+    margin-bottom: 10px;
+    color: var(--dark-color);
+}
+
+.code-example pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.code-example code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+/* Passos de ataque */
+.attack-steps {
+    margin: 30px 0;
+}
+
+.step {
+    display: flex;
+    margin-bottom: 25px;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+.step-number {
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    min-width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.step-content {
+    padding: 20px;
+    flex: 1;
+}
+
+.step-content h5 {
+    margin-bottom: 10px;
+    color: var(--dark-color);
+}
+
+.step-content p {
+    margin: 0;
+}
+
+/* Tipos de ataques */
+.types-list {
+    margin: 30px 0;
+}
+
+.type-item {
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #eee;
+}
+
+.type-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.type-item h5 {
+    color: var(--dark-color);
+    margin-bottom: 10px;
+}
+
+/* Métodos de prevenção */
+.prevention-methods {
+    margin: 30px 0;
+}
+
+.prevention-method {
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.prevention-method:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.prevention-method h5 {
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .tabs {
+        flex-wrap: wrap;
+    }
+    
+    .tab-btn {
+        flex: 1 0 50%;
+        text-align: center;
+    }
+    
+    .step {
+        flex-direction: column;
+    }
+    
+    .step-number {
+        min-width: auto;
+        padding: 10px;
+    }
+} 

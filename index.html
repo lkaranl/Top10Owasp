@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OWASP Top 5 - Demonstração</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/main.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>OWASP Top 5</h1>
+            <p>Demonstração das principais vulnerabilidades web</p>
+            <nav>
+                <ul>
+                    <li><a href="#inicio">Início</a></li>
+                    <li><a href="#vulnerabilidades">Vulnerabilidades</a></li>
+                    <li><a href="#sobre">Sobre</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="inicio" class="hero">
+            <div class="container">
+                <h2>Entenda as principais vulnerabilidades web</h2>
+                <p>Aprenda como funcionam os ataques, suas consequências e como se proteger</p>
+                <a href="#vulnerabilidades" class="btn btn-primary">Ver Vulnerabilidades</a>
+            </div>
+        </section>
+
+        <section id="vulnerabilidades" class="vulnerabilidades">
+            <div class="container">
+                <h2>Top 5 Vulnerabilidades OWASP</h2>
+                <div class="cards">
+                    <div class="card" id="injection-card">
+                        <h3>1. Injeção</h3>
+                        <p>Falhas de injeção, como SQL, NoSQL, OS e LDAP</p>
+                        <a href="modulos/injection.html" class="btn">Acessar Módulo</a>
+                    </div>
+                    <div class="card" id="broken-auth-card">
+                        <h3>2. Quebra de Autenticação</h3>
+                        <p>Falhas nos mecanismos de autenticação e sessão</p>
+                        <a href="modulos/broken-auth.html" class="btn">Acessar Módulo</a>
+                    </div>
+                    <div class="card" id="sensitive-data-card">
+                        <h3>3. Exposição de Dados Sensíveis</h3>
+                        <p>Proteção inadequada de dados sensíveis</p>
+                        <a href="modulos/sensitive-data.html" class="btn">Acessar Módulo</a>
+                    </div>
+                    <div class="card" id="xxe-card">
+                        <h3>4. Entidades Externas XML (XXE)</h3>
+                        <p>Processamento inseguro de XML</p>
+                        <a href="modulos/xxe.html" class="btn">Acessar Módulo</a>
+                    </div>
+                    <div class="card" id="broken-access-card">
+                        <h3>5. Quebra de Controle de Acesso</h3>
+                        <p>Restrições inadequadas de acesso</p>
+                        <a href="modulos/broken-access.html" class="btn">Acessar Módulo</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sobre" class="sobre">
+            <div class="container">
+                <h2>Sobre este Projeto</h2>
+                <p>Este projeto é uma demonstração educativa das 5 principais vulnerabilidades do OWASP Top 10, com exemplos interativos de ataques, explicações detalhadas sobre riscos e métodos de prevenção.</p>
+                
+                <h3>Objetivo</h3>
+                <p>O objetivo é ajudar desenvolvedores e estudantes a entenderem os riscos de segurança em aplicações web e como implementar proteções adequadas.</p>
+                
+                <h3>Aviso Legal</h3>
+                <p>As demonstrações neste projeto são simulações controladas. Não utilize as técnicas demonstradas em sistemas reais sem autorização.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 OWASP Top 10 Demo</p>
+        </div>
+    </footer>
+</body>
+</html> 

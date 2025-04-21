@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Injeção SQL - OWASP Top 5</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/modulos.css">
+    <script src="../js/modulos.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>OWASP Top 5</h1>
+            <p>Demonstração das principais vulnerabilidades web</p>
+            <nav>
+                <ul>
+                    <li><a href="../index.html">Início</a></li>
+                    <li><a href="../index.html#vulnerabilidades">Vulnerabilidades</a></li>
+                    <li><a href="../index.html#sobre">Sobre</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="modulo-header">
+            <div class="container">
+                <h2>1. Injeção (SQL Injection)</h2>
+                <p>Ocorre quando dados não confiáveis são enviados a um interpretador como parte de um comando ou consulta</p>
+            </div>
+        </section>
+
+        <section class="modulo-content">
+            <div class="container">
+                <div class="tab-container">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="visao-geral">Visão Geral</button>
+                        <button class="tab-btn" data-tab="demonstracao">Demonstração</button>
+                        <button class="tab-btn" data-tab="funcionamento">Como Funciona</button>
+                        <button class="tab-btn" data-tab="protecao">Proteção</button>
+                    </div>
+
+                    <div class="tab-content">
+                        <!-- Tab 1: Visão Geral -->
+                        <div class="tab-pane active" id="visao-geral">
+                            <h3>O que é Injeção SQL?</h3>
+                            <p>Ataques de injeção SQL (SQLi) são um tipo de técnica de injeção que permite aos atacantes executar comandos SQL maliciosos. Esses ataques exploram vulnerabilidades em aplicações que não validam adequadamente a entrada do usuário antes de incorporá-la em consultas SQL.</p>
+                            
+                            <h3>Gravidade</h3>
+                            <div class="severity-meter high">
+                                <span>Alta</span>
+                            </div>
+                            
+                            <h3>Impactos</h3>
+                            <ul class="impact-list">
+                                <li><strong>Acesso não autorizado a dados:</strong> Visualização de informações confidenciais como senhas, cartões de crédito e dados pessoais.</li>
+                                <li><strong>Modificação de dados:</strong> Alteração ou remoção de registros do banco de dados.</li>
+                                <li><strong>Comprometimento total:</strong> Em casos graves, pode levar à execução de comandos no sistema operacional.</li>
+                                <li><strong>Violação de privacidade:</strong> Exposição de dados pessoais de usuários.</li>
+                                <li><strong>Perda financeira:</strong> Acesso a informações financeiras pode resultar em prejuízos monetários.</li>
+                            </ul>
+                            
+                            <h3>Onde é comum</h3>
+                            <p>Injeções SQL são comuns em:</p>
+                            <ul>
+                                <li>Formulários de login</li>
+                                <li>Páginas de busca</li>
+                                <li>Telas de cadastro</li>
+                                <li>APIs que recebem parâmetros para consultas</li>
+                                <li>Sistemas legados que não implementaram proteções modernas</li>
+                            </ul>
+                        </div>
+
+                        <!-- Tab 2: Demonstração -->
+                        <div class="tab-pane" id="demonstracao">
+                            <h3>Demonstração Prática</h3>
+                            <p>Tente fazer login usando SQL Injection. O sistema abaixo simula um formulário de login vulnerável que constrói uma consulta SQL diretamente com os valores fornecidos pelo usuário.</p>
+                            
+                            <div class="login-form">
+                                <div class="form-group">
+                                    <label for="username">Usuário:</label>
+                                    <input type="text" id="username" name="username" placeholder="Digite seu usuário">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Senha:</label>
+                                    <input type="password" id="password" name="password" placeholder="Digite sua senha">
+                                </div>
+                                <button id="sql-login-btn" class="btn">Login</button>
+                                <p class="hint">Dica: Tente usar <code>' OR '1'='1</code> como usuário</p>
+                            </div>
+                            <div id="sql-result" class="result"></div>
+                            
+                            <div class="code-example">
+                                <h4>Código vulnerável típico:</h4>
+                                <pre><code>// PHP vulnerável a SQL Injection
+$username = $_POST['username'];
+$password = $_POST['password'];
+
+$query = "SELECT * FROM usuarios WHERE username='$username' AND password='$password'";
+$result = mysqli_query($connection, $query);</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Tab 3: Funcionamento -->
+                        <div class="tab-pane" id="funcionamento">
+                            <h3>Como funciona por baixo dos panos</h3>
+                            
+                            <h4>Processo de um ataque de Injeção SQL</h4>
+                            <div class="attack-steps">
+                                <div class="step">
+                                    <div class="step-number">1</div>
+                                    <div class="step-content">
+                                        <h5>Identificação da vulnerabilidade</h5>
+                                        <p>O atacante identifica um campo de entrada que é usado em consultas SQL, como um campo de login ou busca. Ele testa caracteres especiais como aspas simples (') para ver se há erros ou comportamentos incomuns.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="step">
+                                    <div class="step-number">2</div>
+                                    <div class="step-content">
+                                        <h5>Manipulação da consulta SQL</h5>
+                                        <p>Uma vez identificada a vulnerabilidade, o atacante cria uma entrada maliciosa que modifica a lógica da consulta SQL original. Isso pode incluir adicionar condições sempre verdadeiras (como <code>OR 1=1</code>) ou comentar partes da consulta com <code>--</code> ou <code>#</code>.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="step">
+                                    <div class="step-number">3</div>
+                                    <div class="step-content">
+                                        <h5>Execução da consulta modificada</h5>
+                                        <p>A aplicação executa a consulta SQL modificada, que agora tem uma lógica diferente da pretendida pelo desenvolvedor. Por exemplo, uma condição como <code>OR 1=1</code> fará com que a cláusula WHERE sempre seja avaliada como verdadeira.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="step">
+                                    <div class="step-number">4</div>
+                                    <div class="step-content">
+                                        <h5>Extração de informações</h5>
+                                        <p>O atacante pode usar técnicas como UNION SELECT para combinar resultados de consultas diferentes, permitindo acesso a tabelas não relacionadas à consulta original. Técnicas como injeção cega (blind injection) podem ser usadas quando erros não são exibidos.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h4>Tipos comuns de Injeção SQL</h4>
+                            <div class="types-list">
+                                <div class="type-item">
+                                    <h5>Injeção baseada em erro</h5>
+                                    <p>O atacante força a aplicação a gerar um erro SQL que pode revelar informações sobre o banco de dados, sua estrutura ou dados.</p>
+                                    <div class="code-example">
+                                        <pre><code>SELECT * FROM usuarios WHERE id = 1 OR (SELECT 1 FROM (SELECT COUNT(*), 
+CONCAT(VERSION(), FLOOR(RAND(0)*2)) x FROM information_schema.tables GROUP BY x) y);</code></pre>
+                                    </div>
+                                </div>
+                                
+                                <div class="type-item">
+                                    <h5>Injeção baseada em UNION</h5>
+                                    <p>Usa o operador UNION SQL para combinar resultados de duas consultas distintas.</p>
+                                    <div class="code-example">
+                                        <pre><code>SELECT nome, email FROM usuarios WHERE id = 1 UNION SELECT username, password FROM admin;</code></pre>
+                                    </div>
+                                </div>
+                                
+                                <div class="type-item">
+                                    <h5>Injeção cega (blind)</h5>
+                                    <p>Usado quando a aplicação não exibe mensagens de erro ou resultados de consultas SQL. O atacante faz perguntas "sim/não" ao banco de dados e deduz informações pelo comportamento da aplicação.</p>
+                                    <div class="code-example">
+                                        <pre><code>SELECT * FROM usuarios WHERE username = 'admin' AND (SELECT 1 FROM usuarios WHERE username = 'admin' AND SUBSTRING(password, 1, 1) = 'a');</code></pre>
+                                    </div>
+                                </div>
+                                
+                                <div class="type-item">
+                                    <h5>Injeção baseada em tempo</h5>
+                                    <p>Semelhante à injeção cega, mas usa funções que atrasam a resposta do banco de dados para extrair informações.</p>
+                                    <div class="code-example">
+                                        <pre><code>SELECT * FROM usuarios WHERE username = 'admin' AND IF(SUBSTRING(password, 1, 1) = 'a', SLEEP(5), 0);</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tab 4: Proteção -->
+                        <div class="tab-pane" id="protecao">
+                            <h3>Como se proteger</h3>
+                            
+                            <h4>Métodos de prevenção</h4>
+                            <div class="prevention-methods">
+                                <div class="prevention-method">
+                                    <h5>1. Use consultas parametrizadas (prepared statements)</h5>
+                                    <p>Essa é a maneira mais eficaz de prevenir injeções SQL. As consultas parametrizadas separam o código SQL dos dados, tratando os parâmetros como valores literais.</p>
+                                    <div class="code-example">
+                                        <h6>Código vulnerável:</h6>
+                                        <pre><code>// PHP vulnerável
+$id = $_GET['id'];
+$query = "SELECT * FROM produtos WHERE id = $id";</code></pre>
+                                        
+                                        <h6>Código seguro:</h6>
+                                        <pre><code>// PHP com prepared statement
+$id = $_GET['id'];
+$stmt = $conn->prepare("SELECT * FROM produtos WHERE id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();</code></pre>
+                                    </div>
+                                </div>
+                                
+                                <div class="prevention-method">
+                                    <h5>2. Utilize ORM (Object Relational Mapping)</h5>
+                                    <p>ORMs como Hibernate, Django ORM ou Eloquent geralmente fornecem proteção automática contra injeção SQL ao manipular consultas e parâmetros de forma segura.</p>
+                                    <div class="code-example">
+                                        <pre><code>// Exemplo com Node.js e Sequelize
+const user = await User.findOne({
+  where: { username: username, password: password }
+});</code></pre>
+                                    </div>
+                                </div>
+                                
+                                <div class="prevention-method">
+                                    <h5>3. Validação e sanitização de entrada</h5>
+                                    <p>Verifique e limpe todas as entradas do usuário antes de usá-las em consultas SQL.</p>
+                                    <div class="code-example">
+                                        <pre><code>// PHP com sanitização
+$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+if ($id === false) {
+    die("ID inválido");
+}
+// Agora use $id na consulta</code></pre>
+                                    </div>
+                                </div>
+                                
+                                <div class="prevention-method">
+                                    <h5>4. Escape de caracteres especiais</h5>
+                                    <p>Se não puder usar consultas parametrizadas, escape todos os caracteres especiais na entrada do usuário.</p>
+                                    <div class="code-example">
+                                        <pre><code>// PHP com escape
+$username = mysqli_real_escape_string($conn, $_POST['username']);</code></pre>
+                                    </div>
+                                </div>
+                                
+                                <div class="prevention-method">
+                                    <h5>5. Princípio do privilégio mínimo</h5>
+                                    <p>Use contas de banco de dados com o mínimo de privilégios necessários para a aplicação funcionar.</p>
+                                    <div class="code-example">
+                                        <pre><code>CREATE USER 'app_user'@'localhost' IDENTIFIED BY 'password';
+GRANT SELECT, INSERT, UPDATE ON app_db.* TO 'app_user'@'localhost';
+-- Não conceda DROP, CREATE, etc.</code></pre>
+                                    </div>
+                                </div>
+                                
+                                <div class="prevention-method">
+                                    <h5>6. WAF (Web Application Firewall)</h5>
+                                    <p>Implemente um WAF que possa detectar e bloquear tentativas de injeção SQL.</p>
+                                </div>
+                            </div>
+
+                            <h4>Verificação e testes</h4>
+                            <p>Para garantir que sua aplicação esteja protegida contra injeção SQL:</p>
+                            <ul>
+                                <li>Realize testes de penetração regularmente</li>
+                                <li>Use ferramentas automatizadas de análise de código estático</li>
+                                <li>Implemente análise dinâmica de segurança de aplicações (DAST)</li>
+                                <li>Revise manualmente consultas SQL em seu código</li>
+                                <li>Monitore logs de banco de dados em busca de consultas suspeitas</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 OWASP Top 10 Demo</p>
+        </div>
+    </footer>
+</body>
+</html> 
